@@ -1,0 +1,9 @@
+<!-- doc talker node -->
+
+<launch>
+  <arg name="rate" default="1.0"/>
+  <node pkg="jetson_botdoc" type="monitor.py" name="jetson_botdoc" output="screen">
+    <param name="rate" value="$(arg rate)"/>
+    <remap from="gpu_usage" to="/jetson_botdoc/gpu_usage"/>
+  </node>
+</launch>

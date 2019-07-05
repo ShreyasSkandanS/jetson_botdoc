@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>jetson_botdoc</name>
+  <version>0.1.0</version>
+  <description>
+      Jetson health status monitor
+  </description>
+  <maintainer email="sshreyas@seas.upenn.edu">Shreyas Skandan Shivakumar</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>dynamic_reconfigure</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  
+</package>
