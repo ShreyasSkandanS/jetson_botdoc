@@ -3,28 +3,21 @@
 """Python node to monitor Jetson usage"""
 
 import rospy
-
 from std_msgs.msg import Float32
-
-# Give ourselves the ability to run a dynamic reconfigure server.
 from dynamic_reconfigure.server import Server as DynamicReconfigureServer
-
-# Import custom message data and dynamic reconfigure variables.
 from jetson_botdoc.cfg import docConfig
+from jetson_botdoc.msg import gpuUsageData
 
 class JetsonDoctor(object):
-    """Node example class."""
+    """Main monitor class."""
 
     def __init__(self):
-        """Read in parameters."""
-        """Read in parameters."""
         rate = rospy.get_param('~rate', 1.0)
         self.enable = True
         self.server = DynamicReconfigureServer(docConfig, self.reconfigure_cb)
-        self.pub = rospy.Publisher('gpu_usage', Float32, queue_size=10)
+        self.pub = rospy.Publisher('gpu_usage', gpuUsageData, queue_size=10)
 
         self.enable = rospy.get_param('~enable', True)
-        self.message = rospy.get_param('~message', 'hello')
 
         if self.enable:
             self.start()
@@ -34,24 +27,25 @@ class JetsonDoctor(object):
         rospy.Timer(rospy.Duration(1.0 / rate), self.timed_cb)
 
     def start(self):
-        """Turn on publisher."""
-        self.pub = rospy.Publisher('gpu_usage', Float32, queue_size=10)
+        """Turn on publishers"""
+        self.pub = rospy.Publisher('gpu_usage', gpuUsageData, queue_size=10)
 
     def stop(self):
-        """Turn off publisher."""
+        """Turn off publishers"""
         self.pub.unregister()
 
     def timed_cb(self, _event):
-        """Call at a specified interval to publish message."""
+        """Call at a specified interval"""
         if not self.enable:
             return
 
-        msg = Float32()
-        msg.data = 32.00
+        msg = gpuUsageData()
+        msg.data_value.data = self.get_gpu_usage()
+        msg.data_header.stamp = rospy.get_rostime()
         self.pub.publish(msg)
 
     def reconfigure_cb(self, config, dummy):
-        """Create a callback function for the dynamic reconfigure server."""
+        """Dynamic reconfigure server."""
         if self.enable != config["enable"]:
             if config["enable"]:
                 self.start()
@@ -60,8 +54,16 @@ class JetsonDoctor(object):
         self.enable = config["enable"]
         return config
 
+    def get_gpu_usage(self):
+        """Fetch the percentage of GPU being used"""
+        """-- source: https://github.com/jetsonhacks/gpuGraphTX"""
 
-# Main function.
+        gpuLoadFile="/sys/devices/gpu.0/load"
+        with open(gpuLoadFile, 'r') as gpuFile:
+            fileData = gpuFile.read()
+        print(fileData)
+        return float(fileData)/10.0
+
 if __name__ == '__main__':
     rospy.init_node('jetson_botdoc')
     try:
