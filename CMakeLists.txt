@@ -7,7 +7,7 @@ catkin_python_setup()
 
 add_message_files(
   FILES
-  gpuUsageData.msg
+  healthReportData.msg
 )
 
 generate_messages(
