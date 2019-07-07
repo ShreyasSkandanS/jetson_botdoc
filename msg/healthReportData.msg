@@ -1,3 +1,12 @@
 std_msgs/Header data_header
 std_msgs/Float32 gpu_usage
 std_msgs/Float32 usbfs_memory_mb
+std_msgs/Float32 used_memory
+std_msgs/Float32 total_memory
+std_msgs/Float32 free_memory
+std_msgs/Bool cpu_0
+std_msgs/Bool cpu_1
+std_msgs/Bool cpu_2
+std_msgs/Bool cpu_3
+std_msgs/Bool cpu_4
+std_msgs/Bool cpu_5

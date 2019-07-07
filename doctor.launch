@@ -4,6 +4,6 @@
   <arg name="rate" default="1.0"/>
   <node pkg="jetson_botdoc" type="monitor.py" name="jetson_botdoc" output="screen">
     <param name="rate" value="$(arg rate)"/>
-    <remap from="gpu_usage" to="/jetson_botdoc/gpu_usage"/>
+    <remap from="xavier_health" to="/jetson_botdoc/health_report"/>
   </node>
 </launch>
