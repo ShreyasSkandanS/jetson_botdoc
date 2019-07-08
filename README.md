@@ -14,6 +14,12 @@ Output:
 rostopic echo /jetson_botdoc/health_report
 ```
 
+You can view this data using *rqt_graph* or *rqt_bag*
+
+Example:
+![botdoc](/imgs/botdocgraph.png)
+
+
 ### References:
 
 Lots of tricks and methods borrowed from:

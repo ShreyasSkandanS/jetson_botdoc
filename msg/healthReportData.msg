@@ -4,6 +4,9 @@ std_msgs/Float32 usbfs_memory_mb
 std_msgs/Float32 used_memory
 std_msgs/Float32 total_memory
 std_msgs/Float32 free_memory
+std_msgs/Float32 cpu_temp
+std_msgs/Float32 gpu_temp
+std_msgs/Float32 tboard_temp
 std_msgs/Bool cpu_0
 std_msgs/Bool cpu_1
 std_msgs/Bool cpu_2
